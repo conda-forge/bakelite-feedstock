@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bakelite-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/bakelite-{{ version }}.tar.gz
   sha256: ca3905d718939e6f8164045702d8f23ea748218d627c9befbafc741bfb302dc4
 
 build:
@@ -14,15 +14,15 @@ build:
     - bakelite = bakelite.generator.cli:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6,<4.0
+    - python {{ python_min }}
     - pip
     - poetry >=1.1,<2.0
   run:
-    - python >=3.6,<4.0
+    - python >={{ python_min }},<4.0
     - bitstring >=3.1.7,<4.0.0
     - click >=8.0.3,<9.0.0
     - dataclasses-json >=0.5.2,<0.6.0
@@ -37,6 +37,7 @@ test:
     - bakelite --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://pypi.org/project/bakelite
